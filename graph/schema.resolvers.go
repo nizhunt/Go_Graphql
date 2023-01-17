@@ -6,9 +6,8 @@ package graph
 
 import (
 	"context"
-	"fmt"
-	"go_gql/graph/model"
 	"go_gql/database"
+	"go_gql/graph/model"
 )
 
 var db = database.Connect()
@@ -19,7 +18,7 @@ return db.CreateJobListing(input), nil}
 
 // UpdateJobListing is the resolver for the updateJobListing field.
 func (r *mutationResolver) UpdateJobListing(ctx context.Context, id string, input model.UpdateJobListingInput) (*model.JobListing, error) {
-return db.UpdateJobListing(id, input), nil
+return db.UpdateJobListing(id, &input), nil
 }
 
 // DeleteJobListing is the resolver for the deleteJobListing field.
@@ -29,11 +28,11 @@ return db.DeleteJobListing(id), nil
 
 // Jobs is the resolver for the jobs field.
 func (r *queryResolver) Jobs(ctx context.Context) ([]*model.JobListing, error) {
-return db.Jobs()}
+return db.GetJobs(), nil}
 
 // Job is the resolver for the job field.
 func (r *queryResolver) Job(ctx context.Context, id string) (*model.JobListing, error) {
-return db.Job(id)}
+return db.GetJob(id), nil}
 
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
